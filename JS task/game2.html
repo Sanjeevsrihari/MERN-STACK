@@ -1,0 +1,175 @@
+html code
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Arrow Dodge Game</title>
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,sans-serif;
+}
+body{
+    background:#e4a00f;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    min-height:100vh;
+}
+h1{
+    color:#1220ba;
+    margin-bottom:10px;
+}
+.instructions{
+    margin-bottom:20px;
+    color:#d11d1d;
+    font-size:20px;
+    text-align:center;
+}
+
+#score{
+    font-size:28px;
+    font-weight:bold;
+    color:#222;
+    margin-bottom:15px;
+}
+
+#game{
+    width:95vw;
+    max-width:1050px;
+    aspect-ratio:2/1;
+    background:#4bc5e1;
+    border:3px dashed #e033ba;
+    border-radius:10px;
+    position:relative;
+    overflow:hidden;
+}
+
+#player{
+    width:20px;
+    height:50px;
+    background:#497bc7;
+    position:absolute;
+    left:20px;
+    border-radius:18px;
+}
+
+#arrow{
+    position:absolute;
+    font-size:40px;
+}
+
+#gameOver{
+    position:absolute;
+    width:100%;
+    top:40%;
+    text-align:center;
+    color:red;
+    font-size:40px;
+    font-weight:bold;
+    display:none;
+}
+</style>
+
+</head>
+<body>
+
+<h1>🏹 Arrow Dodge Game</h1>
+
+<div class="instructions">
+    ↑ Move Up &nbsp;&nbsp;&nbsp;
+    ↓ Move Down &nbsp;&nbsp;&nbsp;
+    Press <b>R</b> to Restart
+</div>
+
+<div id="score">Score : 0</div>
+
+<div id="game">
+    <div id="player"></div>
+    <div id="arrow">⬅</div>
+
+    <div id="gameOver">
+        GAME OVER
+        <br><br>
+        Press R to Restart
+    </div>
+</div>
+<script>
+const game=document.getElementById("game");
+const player=document.getElementById("player");
+const arrow=document.getElementById("arrow");
+const scoreText=document.getElementById("score");
+const gameOverText=document.getElementById("gameOver");
+let playerY,arrowX,arrowY,score,speed,gameOver;
+function gameWidth(){
+    return game.clientWidth;
+}
+function gameHeight(){
+    return game.clientHeight;
+}
+function resetGame(){
+    playerY=(gameHeight()-100)/2;
+    arrowX=gameWidth();
+    arrowY=Math.random()*(gameHeight()-60);
+    score=0;
+    speed=6;
+    gameOver=false;
+    player.style.top=playerY+"px";
+    arrow.style.left=arrowX+"px";
+    arrow.style.top=arrowY+"px";
+    scoreText.innerHTML="Score : 0";
+    gameOverText.style.display="none";
+    update();
+}
+document.addEventListener("keydown",e=>{
+    if(!gameOver){
+        if(e.key==="ArrowUp")
+            playerY=Math.max(0,playerY-25);
+        if(e.key==="ArrowDown")
+            playerY=Math.min(gameHeight()-100,playerY+25);
+        player.style.top=playerY+"px";
+    }
+    if(e.key==="r"||e.key==="R")
+        resetGame();
+});
+function update(){
+    if(gameOver) return;
+    arrowX-=speed;
+    arrow.style.left=arrowX+"px";
+    arrow.style.top=arrowY+"px";
+    const p=player.getBoundingClientRect();
+    const a=arrow.getBoundingClientRect();
+    if(
+        p.left<a.right &&
+        p.right>a.left &&
+        p.top<a.bottom &&
+        p.bottom>a.top
+    ){
+        gameOver=true;
+        gameOverText.style.display="block";
+        return;
+    }
+    if(arrowX<-60){
+        score++;
+        speed+=0.3;
+        scoreText.innerHTML="Score : "+score;
+        arrowX=gameWidth();
+        arrowY=Math.random()*(gameHeight()-60);
+    }
+    requestAnimationFrame(update);
+}
+window.addEventListener("resize",()=>{
+    if(!gameOver){
+        playerY=Math.min(playerY,gameHeight()-100);
+        player.style.top=playerY+"px";
+    }
+});
+resetGame();
+</script>
+</body>
+</html>
+

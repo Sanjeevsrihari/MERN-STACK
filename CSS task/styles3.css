@@ -1,0 +1,27 @@
+.parent1{
+    background-color: rgba(29, 1, 1, 0.948);
+    height: 700px;
+    width: 450px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr ;
+    
+    justify-content: center;
+}
+.Box{
+    background-color: rgb(72, 228, 19);
+    height: 100px;
+    width: 100px;
+    margin: 10px;
+}
+@media(min-width:500px){
+    .parent1{
+        grid-template-columns: 150px;
+        grid-template-rows: 1fr 1fr ;
+        background-color: rgb(152, 61, 168);
+    }
+}
+@media(min-width:768px){
+    .parent1{
+        grid-template-columns: 1fr 1fr;
+    }
+}
