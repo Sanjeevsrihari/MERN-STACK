@@ -1,0 +1,35 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,600&display=swap');
+
+:root {
+  --ink: #102a43;
+  --muted: #59758a;
+  --paper: #edf7ff;
+  --panel: rgba(255, 255, 255, 0.84);
+  --line: #cfe1ef;
+  --accent: #ff7657;
+  --accent-dark: #d9533b;
+  --lime: #b8e65f;
+  --cobalt: #2764d8;
+  --shadow: 0 18px 45px rgba(26, 74, 114, 0.13);
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  color: var(--ink);
+  background: var(--paper);
+  font-family: 'DM Sans', sans-serif;
+}
+
+button, input { font: inherit; }
+
+.App {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background:
+    radial-gradient(circle at 10% 5%, rgba(184, 230, 95, 0.3), transparent 23rem),
+    radial-gradient(circle at 92% 38%, rgba(39, 100, 216, 0.12), transparent 28rem),
+    linear-gradient(135deg, #edf7ff 0%, #f7fbff 48%, #eef9f2 100%);
+}
